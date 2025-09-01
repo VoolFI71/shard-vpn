@@ -53,7 +53,7 @@ def get_payment_check_keyboard(payment_id: str):
                 callback_data=f"check_pay:{payment_id}"
             )],
             [InlineKeyboardButton(
-                text="📞 Поддержка",
+                text="🧑‍💻 Поддержка",
                 url="https://t.me/xmakedon"
             )]
         ]

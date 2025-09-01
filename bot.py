@@ -148,7 +148,9 @@ async def check_subscription_callback(callback: types.CallbackQuery):
         await callback.message.delete()
         text = "<b>Спасибо за подписку!</b>\n\n"
         if success:
-            text += "<b>🎁 Вам выдана пробная подписка на 14 дней.</b>"
+            text += """<b>🎁🎁 Пробный доступ активирован!.</b>
+            
+        <blockquote><i>Нажмите «🌐 Активировать», чтобы начать пользоваться.</i></blockquote>"""
         else:
             text += "<b>Не удалось автоматически выдать пробный доступ.</b> Обратитесь в поддержку."
         await callback.message.answer(
@@ -268,8 +270,8 @@ async def connect_vpn(message: Message):
 <b>🔗 Мини-приложение:</b>
 <a href="{miniapp_link}">{miniapp_link}</a>
 
-<b>Срок действия:</b> <code>{expiry_date}</code>
-<b>Статус:</b> <code>Активна ✅</code>
+Статус подписки - <b>Активна 🟢</b>
+Действует до -<b> {expiry_date}</b>
 
 <blockquote><i>💡 Нажмите "Инструкция" для подключения.</i></blockquote>
 """,
@@ -396,8 +398,8 @@ async def profile(message: Message):
             text = f"""
 <b>👾 Ваш профиль</b>
 
-<b>Статус подписки:</b><code> активна 🟢</code>
-<b>Дата окончания:</b><code> {expiry_date}</code>
+📌 Статус подписки - <b>Активна 🟢</b>
+⏳ Действует до -<b> {expiry_date}</b>
 """
         else:
             text = "Ошибка получения данных подписки"
@@ -440,7 +442,7 @@ async def promo_action_callback(callback: types.CallbackQuery):
     
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="🖼 Получить картинки", callback_data='get_promo_images')],
-        [InlineKeyboardButton(text="🆘 Поддержка", url="https://t.me/xmakedon")]
+        [InlineKeyboardButton(text="🧑‍💻 Поддержка", url="https://t.me/xmakedon")]
     ])
     
     await callback.message.answer(
@@ -499,15 +501,19 @@ async def info(message: Message):
 async def show_instructions(callback: types.CallbackQuery):
     """Показывает инструкцию по подключению с выбором устройства"""
     devices_keyboard = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="📱 iOS", callback_data='instruction_ios')],
-        [InlineKeyboardButton(text="🤖 Android", callback_data='instruction_android')],
-        [InlineKeyboardButton(text="💻 Windows", callback_data='instruction_win')],
-        [InlineKeyboardButton(text="🍎 macOS", callback_data='instruction_mac')],
+        [
+        InlineKeyboardButton(text="📱 iOS", callback_data='instruction_ios'),
+        InlineKeyboardButton(text="🤖 Android", callback_data='instruction_android')
+        ],
+        [
+        InlineKeyboardButton(text="💻 Windows", callback_data='instruction_win'),
+        InlineKeyboardButton(text="🍎 macOS", callback_data='instruction_mac')
+        ],
         [InlineKeyboardButton(text="🧑‍💻 Поддержка", url="https://t.me/xmakedon")]
     ])
     
     await callback.message.answer(
-        text="""⚡️ <b>Инструкция по подключению</b>
+        text="""📖 <b>Инструкция по подключению</b>
 
 Просто выберите устройство — мы сразу покажем, что делать.""",
         reply_markup=devices_keyboard
@@ -556,7 +562,7 @@ async def show_device_instructions(callback: types.CallbackQuery):
     buttons.append([InlineKeyboardButton(text="🔗 Открыть миниапп", url=miniapp_link)])
     
     # Добавляем кнопку поддержки
-    buttons.append([InlineKeyboardButton(text="🆘 Поддержка", url="https://t.me/xmakedon")])
+    buttons.append([InlineKeyboardButton(text="🧑‍💻 Поддержка", url="https://t.me/xmakedon")])
     
     reply_markup = InlineKeyboardMarkup(inline_keyboard=buttons)
     
@@ -710,7 +716,7 @@ async def successful_payment_handler(message: Message):
 <b>Срок подписки:</b> {period} мес.
 <b>Дата окончания:</b> <code>{expiry_date}</code>
 
-<blockquote><i>🔹 Нажмите «Подключить VPN», чтобы начать пользоваться.</i></blockquote>""",
+<blockquote><i>🔹 Нажмите «Активировать VPN», чтобы начать пользоваться.</i></blockquote>""",
             message_effect_id="5046509860389126442"
         )
 async def main():
